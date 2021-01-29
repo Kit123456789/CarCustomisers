@@ -29,4 +29,18 @@ class CarCustomiserTests: XCTestCase {
         XCTAssertEqual(car.display(), display)
         
     }
+    func testWhenBoughtTiresAndExhaustPackageOtherTwoUpgradesAreDisabled() throws {
+        //arrange
+        let app = XCUIApplication()
+        app.launch()
+        
+        //act
+        let tablesQuery = app.tables
+        tablesQuery.switches["Exhaust Package (Cost: 500)"].tap()
+        tablesQuery.switches["Tires Package (Cost: 500)"].tap()
+        
+        //assert
+        XCTAssertEqual(tablesQuery.switches["Drivetrain Package (Cost: 500)"].isEnabled, false)
+        XCTAssertEqual(tablesQuery.switches["ECU & Fuel Package (Cost: 1000)"].isEnabled, false)
+    }
 }
